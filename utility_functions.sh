@@ -2,7 +2,7 @@
 # This file contains utility helper functions
 # @author ibrahim Uysal
 
-# This function sets bash options to environment
+# Sets bash options to environment
 function set_sh_options {
     set -o nounset   # if uninitialised variable used, then exit
     set -o errexit   # if any command fails, then exit
@@ -68,7 +68,7 @@ function is_null_or_empty {
     fi
 }
 
-# Check string contains substring
+# Check string contains substring.Args: command $string $substring
 function is_contains {
     if [[ "$1" == *"$2"* ]]; then
         return 0
@@ -86,7 +86,7 @@ function is_command_exist {
     fi
 }
 
-# Check is file exist at pecified path. Ex:
+# Check is file exist at specified path. Ex:
 #   if [ $(is_file_exist "test.txt") =="0" ]; then
 #        append_to_file "test.txt" "test string to apped"
 #   fi
@@ -108,3 +108,39 @@ function is_file_contains_text {
     grep -q "$1" "$2"
 }
 
+# Colorize and echo error RED
+function colorize_error {
+    echo  -e "\033[0;31m${1}\033[0m"
+}
+
+# Colorize and echo warnings  yellow
+function colorize_warning {
+    echo -e "\033[0;33m${1}\033[0m"
+}
+
+# Colorize and echo info cyan
+function colorize_info {
+    echo -e "\033[0;36m${1}\033[0m"
+}
+
+# Colorize and echo success green
+function colorize_success {
+    echo -e "\033[0;32m${1}\033[0m"
+}
+
+# Ask user to continue or not
+function ask_to_continue {
+        while :
+        do
+            read -p 'Do you want to Continue (yes/no?): ' answer
+            case "${answer}" in
+                [yY]|[yY][eE][sS]) return 0 ;;
+                [nN]|[nN][oO]) return 1 ;;
+            esac
+        done
+}
+
+# generate alphanumeric string
+function get_random {
+    echo `openssl rand -base64 12`
+}
