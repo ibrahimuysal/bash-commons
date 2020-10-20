@@ -108,15 +108,3 @@ function is_file_contains_text {
     grep -q "$1" "$2"
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
